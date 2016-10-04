@@ -29,4 +29,41 @@ describe "items CRUD API" do
     expect(response).to be_success
     expect(item["name"]).to eq(Item.first.name)
   end
+
+  it "finds a single item by description without regard to case" do
+    item = create(:item)
+    get "/api/v1/items/find?description=#{item.description.upcase}"
+    item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(item["description"]).to eq(Item.first.description)
+  end
+
+  it "finds a single item by unit price" do
+    item = create(:item)
+    get "/api/v1/items/find?unit_price=#{item.unit_price}"
+    item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(item["unit_price"]).to eq(Item.first.unit_price)
+  end
+
+  it "finds a single item by merchant" do
+    item = create(:item)
+    get "/api/v1/items/find?merchant_id=#{item.merchant.id}"
+    item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(item["merchant_id"]).to eq(Item.first.merchant.id)
+  end
+
+  it "finds a random item" do
+    create_list(:item, 2)
+    get "/api/v1/items/random"
+    item = JSON.parse(response.body)
+    item_ids = Item.all.map { |item| item.id }
+
+    expect(response).to be_success
+    expect(item_ids).to include(item["id"])
+  end
 end
