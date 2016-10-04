@@ -20,4 +20,13 @@ describe "items CRUD API" do
     expect(item["name"]).to eq(Item.first.name)
     expect(item["description"]).to eq(Item.first.description)
   end
+
+  it "finds a single item by name without regard to case" do
+    item = create(:item)
+    get "/api/v1/items/find?name=#{item.name.upcase}"
+    item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(item["name"]).to eq(Item.first.name)
+  end
 end
