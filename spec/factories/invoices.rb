@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :invoice do
-    customer_id { Faker::Number.number(5) }
-    merchant_id { Faker::Number.number(5) }
+    customer
+    merchant
     status "shipped"
   end
 end
