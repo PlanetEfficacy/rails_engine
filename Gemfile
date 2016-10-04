@@ -29,6 +29,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'simplecov', require: false
   gem 'faker'
+  gem 'pry'
 
 end
 

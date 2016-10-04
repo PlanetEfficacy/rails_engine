@@ -35,4 +35,34 @@ describe "invoice items CRUD API" do
     expect(invoice_item["quantity"]).to eq(InvoiceItem.first.quantity)
     expect(invoice_item["unit_price"]).to eq(InvoiceItem.first.unit_price)
   end
+
+  it "can find by id" do
+    invoice_item = create(:invoice_item)
+    get "/api/v1/invoice_items/find?id=#{invoice_item.id}"
+    invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_item.class).to eq(Hash)
+    expect(invoice_item["id"]).to eq(InvoiceItem.first.id)
+    expect(invoice_item["item_id"]).to eq(InvoiceItem.first.item_id)
+    expect(invoice_item["invoice_id"]).to eq(InvoiceItem.first.invoice_id)
+    expect(invoice_item["quantity"]).to eq(InvoiceItem.first.quantity)
+    expect(invoice_item["unit_price"]).to eq(InvoiceItem.first.unit_price)
+  end
+
+  it "can find by quantity" do
+    create_list(:invoice_item, 2, quantity: 2)
+    invoice_item = create(:invoice_item, quantity: 3)
+    get "/api/v1/invoice_items/find?quantity=2"
+    invoice_items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_items.class).to eq(Array)
+    expect(invoice_items.count).to eq(2)
+    expect(invoice_items).not_to include(invoice_item)
+
+    invoice_items.each do |invoice_item|
+      expect(invoice_item["quantity"]).to eq(2)
+    end
+  end
 end
