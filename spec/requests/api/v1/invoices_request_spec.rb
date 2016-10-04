@@ -17,7 +17,7 @@ describe "invoices CRUD API" do
 
     expect(response).to be_success
     expect(invoice.class).to eq(Hash)
-    expect(invoice["id"]).to eq(Invoice.first.id)
+    expect(invoice["id"]).to eq(new_invoice.id)
   end
 
   it "finds a single invoice by id" do
@@ -26,7 +26,7 @@ describe "invoices CRUD API" do
     invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(invoice["id"]).to eq(Invoice.first.id)
+    expect(invoice["id"]).to eq(new_invoice.id)
   end
 
   it "finds a single invoice by customer" do
@@ -35,25 +35,25 @@ describe "invoices CRUD API" do
     invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(invoice["customer_id"]).to eq(Invoice.first.customer.id)
+    expect(invoice["customer_id"]).to eq(new_invoice.customer.id)
   end
 
   it "finds a single invoice by merchant" do
-    invoice = create(:invoice)
-    get "/api/v1/invoices/find?merchant_id=#{invoice.merchant.id}"
+    new_invoice = create(:invoice)
+    get "/api/v1/invoices/find?merchant_id=#{new_invoice.merchant.id}"
     invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(invoice["merchant_id"]).to eq(Invoice.first.merchant.id)
+    expect(invoice["merchant_id"]).to eq(new_invoice.merchant.id)
   end
 
   it "finds a single invoice by status without regard to case" do
-    invoice = create(:invoice)
-    get "/api/v1/invoices/find?status=#{invoice.status.upcase}"
+    new_invoice = create(:invoice)
+    get "/api/v1/invoices/find?status=#{new_invoice.status.upcase}"
     invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(invoice["status"]).to eq(Invoice.first.status)
+    expect(invoice["status"]).to eq(new_invoice.status)
   end
 
   it "finds a random invoice" do
