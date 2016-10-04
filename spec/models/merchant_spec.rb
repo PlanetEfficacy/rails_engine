@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Merchant, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "can return a random merchant" do
+    create_list(:merchant, 2)
+    merchant = Merchant.random
+    expect(merchant).to be_instance_of(Merchant)
+  end
 end
