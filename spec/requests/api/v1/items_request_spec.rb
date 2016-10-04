@@ -21,6 +21,15 @@ describe "items CRUD API" do
     expect(item["description"]).to eq(Item.first.description)
   end
 
+  it "finds a single item by id" do
+    item = create(:item)
+    get "/api/v1/items/find?id=#{item.id}"
+    item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(item["id"]).to eq(Item.first.id)
+  end
+
   it "finds a single item by name without regard to case" do
     item = create(:item)
     get "/api/v1/items/find?name=#{item.name.upcase}"
@@ -65,5 +74,64 @@ describe "items CRUD API" do
 
     expect(response).to be_success
     expect(item_ids).to include(item["id"])
+  end
+
+  it "finds all items by id" do
+    new_items = create_list(:item, 2)
+    get "/api/v1/items/find_all?id=#{new_items.first.id}"
+    items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(items).to be_instance_of(Array)
+    expect(items.first["id"]).to eq(Item.first.id)
+  end
+
+  it "finds all items by name without regard to case" do
+    create_list(:item, 2, name: "thingy")
+    get "/api/v1/items/find_all?name=THINGY"
+    items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(items).to be_instance_of(Array)
+    items.each do |item|
+      expect(item["name"]).to eq("thingy")
+    end
+  end
+
+  it "finds all items by description without regard to case" do
+    create_list(:item, 2, description: "This thingy is huge.")
+    get "/api/v1/items/find_all?description=THIS THINGY IS HUGE."
+    items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(items).to be_instance_of(Array)
+    items.each do |item|
+      expect(item["description"]).to eq("This thingy is huge.")
+    end
+  end
+
+  it "finds all items by unit price" do
+    create_list(:item, 2, unit_price: 1000)
+    get "/api/v1/items/find_all?unit_price=1000"
+    items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(items).to be_instance_of(Array)
+    items.each do |item|
+      expect(item["unit_price"]).to eq(1000)
+    end
+  end
+
+  it "finds all items by merchant" do
+    merchant = create(:merchant)
+    create_list(:item, 2, merchant: merchant)
+    get "/api/v1/items/find_all?merchant_id=#{merchant.id}"
+    items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(items).to be_instance_of(Array)
+    items.each do |item|
+      expect(item["merchant_id"]).to eq(merchant.id)
+    end
   end
 end
