@@ -5,6 +5,10 @@ Rails.application.routes.draw do
       namespace :invoice_items do
         get '/find', to: 'search#show'
       end
+
+      namespace :invoices do
+        get '/find', to: 'search#show'
+      end
     end
   end
 
