@@ -6,4 +6,8 @@ class InvoiceItem < ApplicationRecord
     offset = rand(InvoiceItem.count)
     InvoiceItem.offset(offset).first
   end
+
+  def subtotal
+    quantity * unit_price
+  end
 end
