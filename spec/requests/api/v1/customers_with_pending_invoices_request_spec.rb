@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe "customers with pending invoices" do
-  it "returns a list of customers" do
+describe "get to customers with pending invoices" do
+  it "returns a collection of customers which have pending (unpaid) invoices" do
     merchant = create(:merchant)
     new_customers = create_list(:customer, 2)
     invoice_1 = create(:invoice, customer_id: new_customers.first.id, merchant_id: merchant.id)
