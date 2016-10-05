@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         get 'find_all', to: 'search#index'
         get 'find', to: 'search#show'
         get 'random', to: 'random#show'
+        get ":id/customers_with_pending_invoices", to: "customers#index"
       end
       namespace :customers do
         get 'find_all', to: 'search#index'
@@ -45,5 +46,6 @@ Rails.application.routes.draw do
       resources :transactions, only: [:index, :show]
     end
   end
+
 
 end
