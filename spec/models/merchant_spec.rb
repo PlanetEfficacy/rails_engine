@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Merchant, type: :model do
+  it { should have_many(:invoices) }
+  it { should have_many(:customers) }
+
+
   it "can return a random merchant" do
     create_list(:merchant, 2)
     merchant = Merchant.random
