@@ -5,4 +5,9 @@ class Api::V1::Merchants::AllRevenueController < ApplicationController
                         .where(invoice_items: {created_at: date})
                         .sum("invoice_items.quantity * invoice_items.unit_price")
   end
+
+  def index
+    quantity = params["quantity"]
+    # render json: 
+  end
 end

@@ -5,7 +5,7 @@ class Api::V1::Items::RevenueController < ApplicationController
                     .joins(:invoices)
                     .select('SUM(invoice_items.quantity * invoice_items.unit_price) as subtotal')
                     .group(:invoices)
-                    .order(:"subtotal")
+                    .order(:subtotal)
                     .limit(quantity)
   end
 end
