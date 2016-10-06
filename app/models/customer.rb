@@ -10,4 +10,11 @@ class Customer < ApplicationRecord
     offset = rand(Customer.count)
     Customer.offset(offset).first
   end
+  
+  def favorite_merchant 
+    merchants
+    .select("merchants.*, count(invoices.merchant_id) as invoice_count")
+    .joins(:transactions).where(transactions: {:result => 'success'}).group(:id).order("invoice_count desc").first
+  end
 end
+
