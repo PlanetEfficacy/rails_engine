@@ -8,4 +8,8 @@ class Merchant < ApplicationRecord
     offset = rand(Merchant.count)
     Merchant.offset(offset).first
   end
+
+  def customers_with_pending_invoices
+    customers.joins(:transactions).where(transactions: {result: "failed"})
+  end
 end
