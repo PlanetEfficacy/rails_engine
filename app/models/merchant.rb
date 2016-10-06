@@ -18,7 +18,16 @@ class Merchant < ApplicationRecord
   end
 
   def customers_with_pending_invoices
-    # customers.
+    # customers.joins("join transactions on transactions.invoice_id = invoices.id")
+    # .merge(Transaction.pending)
+
+
+
+    # select distinct on (customers.id) customers.* from customers inner join invoices
+    # on invoices.customer_id = customers.id inner
+    # join transactions on transactions.invoice_id = invoices.id where
+    # invoices.merchant_id = 17 and transactions.result = 'failed'
+
     # customers.joins(:invoices).joins(:transactions).where(transactions: )
     # invoices.joins(:transactions).where(transactions: {result: "failed"}).joins(:customer).distinct
     # customers.joins(:transactions).where(transactions: {result: "failed"})
