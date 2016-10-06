@@ -60,9 +60,10 @@ describe "invoice items CRUD API" do
     new_invoice_item = create(:invoice_item)
     get "/api/v1/invoice_items/find?unit_price=#{new_invoice_item.unit_price}"
     invoice_item = JSON.parse(response.body)
+    expected_price = "#{'%.2f' % (new_invoice_item.unit_price/100.0)}"
 
     expect(response).to be_success
-    expect(invoice_item["unit_price"]).to eq(new_invoice_item.unit_price)
+    expect(invoice_item["unit_price"]).to eq(expected_price)
   end
 
   it "finds a random invoice" do
@@ -131,7 +132,7 @@ describe "invoice items CRUD API" do
     expect(response).to be_success
     expect(invoice_items).to be_instance_of(Array)
     invoice_items.each do |invoice_item|
-      expect(invoice_item["unit_price"]).to eq(1000)
+      expect(invoice_item["unit_price"]).to eq("10.00")
     end
   end
 end

@@ -6,7 +6,8 @@ class CreateCustomers < ActiveRecord::Migration[5.0]
       t.citext :first_name
       t.citext :last_name
 
-      t.timestamps
+      t.datetime :created_at
+      t.datetime :updated_at
     end
   end
 end
