@@ -18,11 +18,10 @@ describe "get request to merchants revenue with date parameter" do
               quantity: 2)
     end
 
-    get "/api/v1/merchants/revenue?date=2012-03-16 11:55:05"
+    get "/api/v1/merchants/#{merchant.id}/revenue"
     revenue = JSON.parse(response.body)
 
     expected_return = {"total_revenue" => "40.00"}
-
     expect(response).to be_success
     expect(revenue).to eq({"total_revenue" => "40.00"})
   end
