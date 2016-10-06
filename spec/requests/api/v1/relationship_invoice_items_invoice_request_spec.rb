@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "get to invoice_items/invoice" do
+describe "get to invoice_items/:id/invoice" do
   it "returns the associated invoice" do
     new_invoice = create(:invoice)
     invoice_item = create(:invoice_item, invoice_id: new_invoice.id)
