@@ -1,12 +1,10 @@
 class Merchant < ApplicationRecord
   has_many :invoices
   has_many :customers, through: :invoices
-<<<<<<< HEAD
   has_many :invoice_items, through: :invoices
   has_many :transactions, through: :invoices
-=======
   has_many :items
->>>>>>> master
+
 
   def self.random
     offset = rand(Merchant.count)
