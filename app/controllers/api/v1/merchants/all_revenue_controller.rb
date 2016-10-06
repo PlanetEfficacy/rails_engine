@@ -1,10 +1,6 @@
 class Api::V1::Merchants::AllRevenueController < ApplicationController
   def show
-    date = params["date"]
-    render json: Invoice.successful
-                        .where(created_at: date)
-                        .joins(:invoice_items)
-                        .sum("invoice_items.quantity * invoice_items.unit_price")
+    render json: Merchant.total_revenue_for_date(params["date"])
   end
 
   def index
