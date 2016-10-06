@@ -10,7 +10,6 @@ class Merchant < ApplicationRecord
     Merchant.offset(offset).first
   end
 
-
   def customers_with_pending_invoices
     customers.joins("join transactions on transactions.invoice_id = invoices.id")
             .merge(Transaction.pending).distinct
@@ -39,7 +38,7 @@ class Merchant < ApplicationRecord
       .joins(:invoice_items)
       .sum("invoice_items.quantity * invoice_items.unit_price"))}
   end
-  
+
   def self.most_items_sold(quantity)
     select('merchants.*, SUM(invoice_items.quantity) AS most_items')
       .joins(invoices: [:invoice_items, :transactions])
@@ -49,6 +48,13 @@ class Merchant < ApplicationRecord
       .limit(quantity)
   end
 
+  def favorite_customer
+    customers.select("customers.*, count(invoices.customer_id) as invoice_count")
+      .joins(:transactions)
+      .merge(Transaction.successful)
+      .group(:id)
+      .order("invoice_count desc").first
+  end
 
   private
 
