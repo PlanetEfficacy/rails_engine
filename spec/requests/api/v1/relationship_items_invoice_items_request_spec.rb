@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "get to items/:id/invoice_items" do
-  it "returns the associated invoice item" do
+  it "returns the associated invoice items" do
     new_item = create(:item)
     invoice_item = create_list(:invoice_item, 2, item_id: new_item.id)
 

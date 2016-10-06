@@ -18,6 +18,7 @@ class Merchant < ApplicationRecord
   end
 
   def customers_with_pending_invoices
+    # customers.
     # customers.joins(:invoices).joins(:transactions).where(transactions: )
     # invoices.joins(:transactions).where(transactions: {result: "failed"}).joins(:customer).distinct
     # customers.joins(:transactions).where(transactions: {result: "failed"})
