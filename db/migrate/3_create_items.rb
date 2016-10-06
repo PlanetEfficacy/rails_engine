@@ -8,7 +8,8 @@ class CreateItems < ActiveRecord::Migration[5.0]
       t.integer :unit_price
       t.references :merchant, index: true, foreign_key: true
 
-      t.timestamps
+      t.datetime :created_at
+      t.datetime :updated_at
     end
   end
 end

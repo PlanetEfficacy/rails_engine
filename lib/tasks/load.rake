@@ -1,9 +1,6 @@
 require 'csv'
 
 namespace :load do
-  task :all => [:items, :invoices, :invoice_items, :merchants, :transactions, :customers]
-
-
   desc "TODO"
   task merchants: :environment do
     csv_text = File.read('./data/merchants.csv')
@@ -57,4 +54,6 @@ namespace :load do
       Transaction.create!(row.to_hash)
     end
   end
+
+  task :all => [:customers, :merchants, :items, :invoices, :invoice_items, :transactions ]
 end

@@ -4,7 +4,8 @@ class CreateMerchants < ActiveRecord::Migration[5.0]
     create_table :merchants do |t|
       t.citext :name
 
-      t.timestamps
+      t.datetime :created_at
+      t.datetime :updated_at
     end
   end
 end
