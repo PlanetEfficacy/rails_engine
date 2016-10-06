@@ -31,7 +31,7 @@ RSpec.describe Merchant, type: :model do
 
     expected_return = {"total_revenue" => "40.00"}
 
-    expect(Merchant.total_revenue_for_date(date)).to eq(expected_return)
+    expect(Merchant.total_revenue_by_date(date)).to eq(expected_return)
   end
 
   it "can return customers with pending invoices" do
