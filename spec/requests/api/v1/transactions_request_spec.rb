@@ -2,24 +2,21 @@ require 'rails_helper'
 
 describe "transactions CRUD API" do
   it "returns a list of transactions" do
-    create_list(:transaction, 3)
+    new_transactions = create_list(:transaction, 3)
     get "/api/v1/transactions"
     transactions = JSON.parse(response.body)
 
     expect(response).to be_success
     expect(transactions.count).to eq(3)
-    
-    expect(transactions.first["id"]).to eq(Transaction.first.id)
-    expect(transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
-    expect(transactions.first["credit_card_expiration_date"]).to eq(Transaction.first.credit_card_expiration_date)
-    expect(transactions.first["result"]).to eq(Transaction.first.result)
-    expect(transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
-    
-    expect(transactions.last["id"]).to eq(Transaction.last.id)
-    expect(transactions.last["credit_card_number"]).to eq(Transaction.last.credit_card_number)
-    expect(transactions.last["credit_card_expiration_date"]).to eq(Transaction.last.credit_card_expiration_date)
-    expect(transactions.last["result"]).to eq(Transaction.last.result)
-    expect(transactions.last["invoice_id"]).to eq(Transaction.last.invoice_id)
+    expect(transactions.first["id"]).to eq(new_transactions.first.id)
+    expect(transactions.first["credit_card_number"]).to eq(new_transactions.first.credit_card_number)
+    expect(transactions.first["result"]).to eq(new_transactions.first.result)
+    expect(transactions.first["invoice_id"]).to eq(new_transactions.first.invoice_id)
+
+    expect(transactions.last["id"]).to eq(new_transactions.last.id)
+    expect(transactions.last["credit_card_number"]).to eq(new_transactions.last.credit_card_number)
+    expect(transactions.last["result"]).to eq(new_transactions.last.result)
+    expect(transactions.last["invoice_id"]).to eq(new_transactions.last.invoice_id)
   end
 
   it "returns a single transaction" do
@@ -30,11 +27,10 @@ describe "transactions CRUD API" do
     expect(response).to be_success
     expect(transaction.class).to eq(Hash)
     expect(transaction["credit_card_number"]).to eq(Transaction.first.credit_card_number)
-    expect(transaction["credit_card_expiration_date"]).to eq(Transaction.first.credit_card_expiration_date)
     expect(transaction["result"]).to eq(Transaction.first.result)
     expect(transaction["invoice_id"]).to eq(Transaction.first.invoice_id)
   end
-  
+
   it "finds a transaction by id" do
     transaction = create(:transaction)
     get "/api/v1/transactions/find?id=#{transaction.id}"
@@ -44,11 +40,10 @@ describe "transactions CRUD API" do
     expect(transaction.class).to eq(Hash)
     expect(transaction["id"]).to eq(Transaction.first.id)
     expect(transaction["credit_card_number"]).to eq(Transaction.first.credit_card_number)
-    expect(transaction["credit_card_expiration_date"]).to eq(Transaction.first.credit_card_expiration_date)
     expect(transaction["result"]).to eq(Transaction.first.result)
     expect(transaction["invoice_id"]).to eq(Transaction.first.invoice_id)
   end
-  
+
   it "finds a single transaction by result without regard to case" do
     transaction = create(:transaction)
     get "/api/v1/transactions/find?result=#{transaction.result.upcase}"
@@ -58,7 +53,7 @@ describe "transactions CRUD API" do
     expect(transaction.class).to eq(Hash)
     expect(transaction["result"]).to eq(Transaction.first.result)
   end
-  
+
   it "finds all transactions by id" do
     transactions = create_list(:transaction, 2)
     get "/api/v1/transactions/find_all?id=#{transactions.first.id}"
@@ -88,7 +83,7 @@ describe "transactions CRUD API" do
       expect(transaction["result"]).to eq("success")
     end
   end
-  
+
   it "finds a random transaction" do
     create_list(:transaction, 2)
     get "/api/v1/transactions/random"
