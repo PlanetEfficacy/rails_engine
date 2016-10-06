@@ -31,6 +31,6 @@ describe "get request to merchant revenue" do
     revenue = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(revenue).to eq(100)
+    expect(revenue).to eq({"revenue" => "1.00"})
   end
 end
