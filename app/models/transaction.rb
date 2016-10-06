@@ -8,6 +8,10 @@ class Transaction < ApplicationRecord
     where(:result => 'failed')
   end
 
+  def self.successful
+    where(:result => 'success')
+  end
+
   def self.random
     offset = rand(Transaction.count)
     Transaction.offset(offset).first

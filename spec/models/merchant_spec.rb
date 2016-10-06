@@ -47,4 +47,18 @@ RSpec.describe Merchant, type: :model do
     expect(customers.count).to eq(1)
     expect(customers.first).to eq(new_customers.first)
   end
+
+  it "can return the customer who has conducted the most total number of successful transactions" do
+    merchant = create(:merchant)
+    customer_1 = create(:customer)
+    customer_2 = create(:customer)
+    customer_1_invoices = create_list(:invoice, 2, customer_id: customer_1.id, merchant_id: merchant.id)
+    customer_2_invoice = create(:invoice, customer_id: customer_2.id, merchant_id: merchant.id)
+    create(:transaction, invoice_id: customer_2_invoice.id, result: "success")
+    customer_1_invoices.each do |invoice|
+      create(:transaction, invoice_id: invoice.id, result: "success")
+    end
+
+    expect(merchant.favorite_customer).to eq(customer_1)
+  end
 end
