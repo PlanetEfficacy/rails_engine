@@ -18,8 +18,8 @@ class Merchant < ApplicationRecord
   end
 
   def customers_with_pending_invoices
-    # customers.joins("join transactions on transactions.invoice_id = invoices.id")
-    # .merge(Transaction.pending)
+    customers.joins("join transactions on transactions.invoice_id = invoices.id")
+            .merge(Transaction.pending).distinct
 
 
 

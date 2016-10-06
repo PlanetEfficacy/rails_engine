@@ -34,7 +34,7 @@ RSpec.describe Merchant, type: :model do
     expect(Merchant.total_revenue_for_date(date)).to eq(expected_return)
   end
 
-  xit "can return customers with pending invoices" do
+  it "can return customers with pending invoices" do
     merchant = create(:merchant)
     new_customers = create_list(:customer, 2)
     invoice_1 = create(:invoice, customer_id: new_customers.first.id, merchant_id: merchant.id)
