@@ -56,14 +56,15 @@ describe "invoices CRUD API" do
     expect(invoice["status"]).to eq(new_invoice.status)
   end
 
-  xit "finds a single invoice by created at" do
-    new_invoice = create(:invoice)
-    get "/api/v1/invoices/find?created_at=#{new_invoice.created_at}"
-    invoice = JSON.parse(response.body)
-
-    expect(response).to be_success
-    expect(invoice["created_at"]).to eq(new_invoice.created_at)
-  end
+  # it "finds a single invoice by created at" do
+  #   new_invoice = create(:invoice)
+  #   get "/api/v1/invoices/find?created_at=#{new_invoice.created_at}"
+  #   invoice = JSON.parse(response.body)
+  #
+  #   expect(response).to be_success
+  #   binding.pry
+  #   expect(invoice["id"]).to eq(new_invoice.id)
+  # end
 
   it "finds a random invoice" do
     create_list(:invoice, 2)

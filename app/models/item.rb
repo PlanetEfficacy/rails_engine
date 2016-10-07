@@ -26,6 +26,21 @@ class Item < ApplicationRecord
   end
 
   def best_day
-    # Item.find(1099).invoices.select("invoices.*, SUM(invoice_items.quantity) as item_quantity").joins(:invoice_items).order("item_quantity DESC").group("invoices.id").first.created_at
+    # Item.find(1099).invoices
+    # .select("invoices.*, SUM(invoice_items.quantity)
+    # as item_quantity").joins(:invoice_items)
+    # .order("item_quantity DESC")
+    # .group("invoices.id").first.created_at
+
+    # get the item
+    # get invoice
+    # get its invoice items
+    # get the quantity
+
+
+    invoices.select("invoices.*, SUM(invoice_items.quantity) as quantity")
+      .joins(:invoice_items)
+      .order("quantity DESC, invoices.created_at DESC")
+      .group("invoices.id").first.created_at
   end
 end
