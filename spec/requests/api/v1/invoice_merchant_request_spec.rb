@@ -9,8 +9,7 @@ describe "invoice with merchant" do
     raw_merchant = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(raw_merchant).to be_instance_of(Array)
-    expect(raw_merchant.count).to eq(1)
-    expect(merchants.first.id).to eq(raw_merchant.first["id"])
+    expect(raw_merchant).to be_instance_of(Hash)
+    expect(merchants.first.id).to eq(raw_merchant["id"])
   end
 end

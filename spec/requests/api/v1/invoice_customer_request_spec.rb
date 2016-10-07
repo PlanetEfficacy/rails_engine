@@ -9,8 +9,7 @@ describe "invoice with customer" do
     raw_customer = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(raw_customer).to be_instance_of(Array)
-    expect(raw_customer.count).to eq(1)
-    expect(customers.first.id).to eq(raw_customer.first["id"])
+    expect(raw_customer).to be_instance_of(Hash)
+    expect(customers.first.id).to eq(raw_customer["id"])
   end
 end
