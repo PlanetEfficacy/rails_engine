@@ -45,6 +45,7 @@ RSpec.describe Item, type: :model do
                                 quantity: 1)
 
     expected_item_1_date = invoice_most.created_at
-    expect(item_1.best_day).to eq(expected_item_1_date)
+    expect(item_1.best_day).to be_instance_of(Hash)
+    expect(item_1.best_day["best_day"]).to eq(expected_item_1_date)
   end
 end

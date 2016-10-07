@@ -16,9 +16,11 @@ describe "get request to single item's best day" do
 
     get "/api/v1/items/#{item_1.id}/best_day"
     date = JSON.parse(response.body)
+    expected_date = invoice_most.created_at.to_i
+    actual_date = DateTime.parse(date["best_day"]).to_i
 
     expect(response).to be_success
-    expect(date).to be_instance_of(String)
-    expect(DateTime.parse(date).to_i).to eq(invoice_most.created_at.to_i)
+    expect(date).to be_instance_of(Hash)
+    expect(actual_date).to eq(expected_date)
   end
 end
