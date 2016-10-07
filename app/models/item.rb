@@ -18,11 +18,11 @@ class Item < ApplicationRecord
   end
   
   def self.top_x_sold(number)
-    select("items.*, SUM(invoice_items.quantity) as sold")
-      .joins(invoices: [:invoice_items, :transactions])
-      .where(transactions: {result: 'success'})
-      .order('sold DESC')
-      .group('items.id')
-      .limit(number)
+    joins(:invoices)
+    .merge(Invoice.successful)
+    .group(:id)
+    .order("sum(invoice_items.quantity) DESC")
+    .first(number)
   end
 end
+
