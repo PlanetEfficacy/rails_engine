@@ -4,7 +4,6 @@ class Api::V1::Merchants::AllRevenueController < ApplicationController
   end
 
   def index
-    quantity = params["quantity"]
-    # render json:
+    render json: Merchant.top_x(params["quantity"])
   end
 end

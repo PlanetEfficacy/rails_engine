@@ -8,7 +8,7 @@ class Item < ApplicationRecord
     Item.offset(offset).first
   end
 
-  def self.top_x_items(number)
+  def self.top_x(number)
     select("items.*, SUM(invoice_items.quantity * invoice_items.unit_price) as revenue")
       .joins(invoices: [:invoice_items, :transactions])
       .where(transactions: {result: 'success'})

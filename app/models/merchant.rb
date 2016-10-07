@@ -56,6 +56,15 @@ class Merchant < ApplicationRecord
       .order("invoice_count desc").first
   end
 
+  def self.top_x(number)
+    select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) as revenue")
+      .joins(invoices: [:invoice_items, :transactions])
+      .where(transactions: {result: 'success'})
+      .order('revenue DESC')
+      .group('merchants.id')
+      .limit(number)
+  end
+
   private
 
   def float_revenue(revenue)
