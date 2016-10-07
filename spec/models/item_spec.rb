@@ -27,8 +27,8 @@ RSpec.describe Item, type: :model do
                               unit_price: 1000)
     create(:transaction, invoice_id: invoice.id, result: "success")
 
-    expect(Item.top_x(2).first).to eq(item_1)
-    expect(Item.top_x(2).last).to eq(item_2)
+    expect(Item.top_x_revenue(2).first).to eq(item_1)
+    expect(Item.top_x_revenue(2).last).to eq(item_2)
   end
   # GET /api/v1/items/:id/best_day returns the date with
   # the most sales for the given item using the invoice date.
