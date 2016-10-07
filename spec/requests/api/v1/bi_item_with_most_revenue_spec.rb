@@ -1,16 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Item, type: :model do
-  it { should belong_to(:merchant) }
-  it { should have_many(:invoice_items) }
-  it { should have_many(:invoices) }
-
-  it "can return a random item" do
-    create_list(:item, 2)
-    item = Item.random
-    expect(item).to be_instance_of(Item)
-  end
-
+describe "get request to most revenue item" do
   it "returns the top x items ranked by total revenue generated" do
     item_1 = create(:item)
     item_2 = create(:item)
@@ -27,7 +17,13 @@ RSpec.describe Item, type: :model do
                               unit_price: 1000)
     create(:transaction, invoice_id: invoice.id, result: "success")
 
-    expect(Item.top_x_items(2).first).to eq(item_1)
-    expect(Item.top_x_items(2).last).to eq(item_2)
+    get "/api/v1/items/most_revenue?quantity=2"
+    items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(items).to be_instance_of(Array)
+    expect(items.length).to eq(2)
+    expect(items.first["id"]).to eq(item_1.id)
+    expect(items.last["id"]).to eq(item_2.id)
   end
 end

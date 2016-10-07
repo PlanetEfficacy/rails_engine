@@ -7,4 +7,13 @@ class Item < ApplicationRecord
     offset = rand(Item.count)
     Item.offset(offset).first
   end
+
+  def self.top_x_items(number)
+    select("items.*, SUM(invoice_items.quantity * invoice_items.unit_price) as revenue")
+      .joins(invoices: [:invoice_items, :transactions])
+      .where(transactions: {result: 'success'})
+      .order('revenue DESC')
+      .group('items.id')
+      .limit(number)
+  end
 end
