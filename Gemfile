@@ -30,7 +30,7 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'faker'
   gem 'pry'
-  gem 'active_model_serializers', '~> 0.10.0'
+  gem 'active_model_serializers', '>= 0.10.0.rc3'
 
 end
 

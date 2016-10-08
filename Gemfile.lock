@@ -167,7 +167,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (~> 0.10.0)
+  active_model_serializers (>= 0.10.0.rc3)
   byebug
   database_cleaner
   factory_girl_rails
